@@ -27,5 +27,32 @@
         </div>
     </div>
 
+    <!-- Job listing fragment to display each result as it's own table -->
+    <div th:fragment="job-listings">
+
+        <!-- if no results, print 0 results -->
+        <h4 th:unless="${jobs} and ${jobs.size()}">0 results</h4>
+
+        <!-- if results, print # of results -->
+        <div th:if="${jobs} and ${jobs.size()}">
+            <h4 th:text="${jobs.size() + ' result(s)'}"></h4>
+
+            <!-- for each job hashmap in the jobs arraylist iterate on jobs -->
+            <div th:each="job : ${jobs}">
+
+                <!-- create table with job-listing css class for each job -->
+                <table class="job-listing">
+                    <!-- for each key pair in the job hashmap print out the key and value -->
+                    <tr th:each="item, idx : ${job}" th:class="${idx.odd} ? 'odd'">
+                        <th th:text="${#strings.capitalizeWords(item.key)}"></th>
+                        <td th:text="${item.value}"></td>
+                    </tr>
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+
 </body>
 </html>
